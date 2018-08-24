@@ -45,15 +45,23 @@ class IqClient(object):
 
     def get_user(self, badge):
         if not self.is_device:
-            raise ValueError('Only devices settings')
+            raise ValueError('Only devices can get user')
 
         r = api.post("{}devices/badges".format(self.base_url), data=dict(badge_code=badge, mac_addr=self.device.mac_addr))
         return IqUser(**r.payload)
 
     def update_settings(self):
         if not self.is_device:
+            raise ValueError('Only devices has settings')
+
+    def device_beat(self):
+        # TODO: check for different method
+        import socket
+        local_ip = socket.gethostbyname(socket.gethostname()) or ''
+        if not self.is_device:
             raise ValueError('Only devices settings')
-        raise NotImplemented
+
+        api.post("{}devices/beat".format(self.base_url), data=dict(mac_addr=self.device.mac_addr, ip_addr=local_ip))
 
     def post_attendancetrack(self, user, direction, timestamp=None, coordinates=None):
         data = dict(direction=direction, coordinates=coordinates)
@@ -88,9 +96,9 @@ class IqClient(object):
 
 
 if __name__ == '__main__':
-    TOKEN =
-    MAC_ADDR =
-    BADGE =
+    TOKEN = '2792737710'
+    MAC_ADDR = '27:92:73:77:10'
+    BADGE = '00519695687075'
 
     iq = IqClient(TOKEN, is_device=True)
 
@@ -111,3 +119,5 @@ if __name__ == '__main__':
     print('--- post_attendancetrack() ---')
     timetrack = iq.post_attendancetrack(user, direction='IN')
     print(timetrack)
+
+    iq.device_beat()

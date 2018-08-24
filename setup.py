@@ -5,7 +5,7 @@ setup(
     version='0.0.1',
     description='Python iQuality API library',
     license='MIT',
-    packages=['iqualitypy'],
+    packages=['iqualitpy'],
     author='Andrea Carmisciano',
     author_email='andrea.carmisciano@gmail.com',
     keywords=['iquality', 'api', 'library', 'timetracking'],
