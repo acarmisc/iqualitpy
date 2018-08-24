@@ -9,5 +9,6 @@ setup(
     author='Andrea Carmisciano',
     author_email='andrea.carmisciano@gmail.com',
     keywords=['iquality', 'api', 'library', 'timetracking'],
-    url='https://github.com/acarmisc/iqualitpy'
+    url='https://github.com/acarmisc/iqualitpy',
+    install_requires=['requests']
 )

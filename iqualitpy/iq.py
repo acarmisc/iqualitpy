@@ -31,9 +31,9 @@ class IqClient(object):
         self.token = token
         self.api_version = api_version or '1.0'
         self.is_device = is_device
-        self.device = None
 
         self.base_url = "{}/api/".format(self.host)
+        self.device = self.me() if is_device else None
 
     def me(self):
         if self.is_device:
@@ -48,7 +48,10 @@ class IqClient(object):
             raise ValueError('Only devices can get user')
 
         r = api.post("{}devices/badges".format(self.base_url), data=dict(badge_code=badge, mac_addr=self.device.mac_addr))
-        return IqUser(**r.payload)
+        if r.payload:
+            return IqUser(**r.payload)
+
+        return None
 
     def update_settings(self):
         if not self.is_device:
