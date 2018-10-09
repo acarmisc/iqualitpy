@@ -97,6 +97,13 @@ class IqClient(object):
     def stop_timer(self):
         raise NotImplemented
 
+    def telegram_bind_user(self, pin, mobile, chat):
+        data = dict(pin=pin, mobile=mobile, chat=chat)
+        r = api.secure_post("{}commons/telegram_bind_user".format(self.base_url), token=self.token,
+                            data=data)      
+        print(r.raw)  
+        return r.payload
+
 
 if __name__ == '__main__':
     TOKEN = '2792737710'
