@@ -10,7 +10,7 @@ class api():
 
     @staticmethod
     def post(*args, **kwargs):
-        res = requests.post(*args, **kwargs,)
+        res = requests.post(*args, **kwargs)
 
         return IqResponse(res)
 
@@ -19,7 +19,7 @@ class api():
         if not token:
             raise ValueError("Missing token for secure request")
 
-        res = requests.post(*args, **kwargs, headers=dict(Authorization="Token {}".format(token)))
+        res = requests.post(*args, headers=dict(Authorization="Token {}".format(token)), **kwargs)
 
         return IqResponse(res)
 
@@ -48,7 +48,7 @@ class IqClient(object):
             raise ValueError('Only devices can get user')
 
         r = api.post("{}devices/badges".format(self.base_url), data=dict(badge_code=badge, mac_addr=self.device.mac_addr))
-        if r.payload:
+        if r.payload and not self.in_enrollment():
             return IqUser(**r.payload)
 
         return None
