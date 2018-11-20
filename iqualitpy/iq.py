@@ -67,7 +67,7 @@ class IqClient(object):
         api.post("{}devices/beat".format(self.base_url), data=dict(mac_addr=self.device.mac_addr, ip_addr=local_ip))
 
     def post_attendancetrack(self, user, direction, timestamp=None, coordinates=None):
-        data = dict(direction=direction, coordinates=coordinates)
+        data = dict(direction=direction, coordinates=coordinates, timestamp=timestamp)
         if self.device:
             data.update(dict(mac_addr=self.device.mac_addr))
 
