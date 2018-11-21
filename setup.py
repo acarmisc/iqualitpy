@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='iqualitypy',
-    version='0.0.1',
+    version='0.0.2',
     description='Python iQuality API library',
     license='MIT',
     packages=['iqualitpy'],
